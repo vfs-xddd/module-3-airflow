@@ -18,10 +18,13 @@ dag = DAG("spacex", default_args=default_args, schedule_interval="0 0 1 1 *")
 
 rokets = ['falcon1', 'falcon9', 'falconheavy', 'all']
 for roket in rokets:
+    comand = "python3 /root/airflow/dags/spacex/load_launches.py -y {{ execution_date.year }} -o /var/data -r " + roket
+    if roket == 'all':
+        comand = "python3 /root/airflow/dags/spacex/load_launches.py -y {{ execution_date.year }} -o /var/data"
     
     t1 = BashOperator(
         task_id="get_data", 
-        bash_command="python3 /root/airflow/dags/spacex/load_launches.py -y {{ execution_date.year }} -o /var/data -r " + roket, 
+        bash_command=comand, 
         dag=dag
     )
 
