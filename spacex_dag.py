@@ -23,13 +23,13 @@ for roket in rokets:
         comand = "python3 /root/airflow/dags/spacex/load_launches.py -y {{ execution_date.year }} -o /var/data"
     
     t1 = BashOperator(
-        task_id="get_data", 
+        task_id="get_data"+roket, 
         bash_command=comand, 
         dag=dag
     )
 
     t2 = BashOperator(
-        task_id="print_data", 
+        task_id="print_data"+roket, 
         bash_command="cat /var/data/year={{ execution_date.year }}/rocket={{ params.rocket }}/data.csv", 
         params={"rocket": roket}, # falcon1/falcon9/falconheavy
         dag=dag
