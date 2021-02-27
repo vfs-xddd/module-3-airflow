@@ -8,18 +8,19 @@ from airflow.utils.dates import days_ago
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2021, 2, 23, 17, 11, 0),
+    'start_date': datetime(2021, 2, 27, 20, 20, 0),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
-    'retry_delay': timedelta(seconds=300),
+    'retry_delay': timedelta(seconds=20),
 }
 
 dag = DAG(
-    'git_sync',
+    'git_sync_start_new',
     default_args=default_args,
     description='A simple tutorial DAG',
+    catchup=False,
     schedule_interval=timedelta(seconds=60),
 )
 
